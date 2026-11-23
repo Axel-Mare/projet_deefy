@@ -1,0 +1,15 @@
+{
+    "name": "elve/td7",
+    "autoload": {
+        "psr-4": {
+            "iutnc\\deefy\\": "src/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Axel-Mare",
+            "email": "axel.mare3@etu.univ-lorraine.fr"
+        }
+    ],
+    "require": {}
+}
