@@ -3,6 +3,7 @@
 namespace iutnc\deefy\action;
 
 use iutnc\deefy\audio\lists\Playlist;
+use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\render\AudioListRenderer;
 
 class AddPlaylistAction extends Action
@@ -19,16 +20,15 @@ class AddPlaylistAction extends Action
             HTML;
         }
 
-        session_start();
-
         $nom = trim($_POST['nom'] ?? '');
-        $nom = filter_var($nom, FILTER_SANITIZE_SPECIAL_CHARS);
 
         if ($nom === '') {
             return '<p>Veuillez entrer un nom de playlist.</p>';
         }
 
         $playlist = new Playlist($nom);
+        $playlist = DeefyRepository::getInstance()->saveEmptyPlaylist($playlist);
+
         $_SESSION['playlist'] = $playlist;
 
         $renderer = new AudioListRenderer($playlist);

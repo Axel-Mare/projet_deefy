@@ -44,9 +44,9 @@ class Dispatcher
 
                 <nav>
                     <a href="?action=default">Accueil</a> |
-                    <a href="?action=add-user">Inscription</a> |
-                    <a href="?action=add-playlist">Créer une playlist</a> |
-                    <a href="?action=playlist">Afficher la playlist</a>
+                    <a href="?action=playlists">Mes playlists</a> |
+                    <a href="?action=playlist">Playlist courante</a> |
+                    <a href="?action=add-playlist">Créer une playlist</a>
                 </nav>
 
                 <hr>

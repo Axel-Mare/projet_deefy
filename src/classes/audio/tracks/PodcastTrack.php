@@ -4,23 +4,12 @@ namespace iutnc\deefy\audio\tracks;
 
 class PodcastTrack extends AudioTrack {
     
-    private string $auteur = '';
-    private string $date = '';
-        
-    public function __construct(
-        private $titre, 
-        private $fichier
-    ) {
-        parent::__construct($titre,$fichier);
-    }
+    protected string $auteur = '';
+    protected string $date = '';
 
-    public function __get(string $attrname): mixed
+    public function __construct(string $titre, string $fichier)
     {
-        if (property_exists($this, $attrname)) {
-            return $this->$attrname;
-        }
-        //throw new \Exception("invalid property : " . $attrname);
-        return parent::__get($attrname);
+        parent::__construct($titre, $fichier);
     }
 
     public function setAuteur(string $aut)

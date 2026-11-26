@@ -48,6 +48,63 @@ class DeefyRepository
         return self::$instance;
     }
 
+    public function findPlaylist(int $id): ?Playlist
+    {
+        $stmt = $this->pdo->prepare('SELECT id, nom FROM playlist WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+            return null;
+        }
+
+        $pl = new Playlist($row['nom']);
+        $pl->id = (int) $row['id'];
+
+        $stmt = $this->pdo->prepare(
+            'SELECT t.* FROM track t
+             JOIN playlist2track pt ON pt.id_track = t.id
+             WHERE pt.id_pl = :id
+             ORDER BY pt.no_piste_dans_liste'
+        );
+        $stmt->execute(['id' => $id]);
+
+        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $pl->addTrack($this->createTrack($row));
+        }
+
+        return $pl;
+    }
+
+    private function createTrack(array $row)
+    {
+        if ($row['type'] === 'A') {
+            $track = new AlbumTrack(
+                $row['titre'],
+                $row['titre_album'] ?? '',
+                (int) ($row['numero_album'] ?? 0),
+                $row['filename'] ?? ''
+            );
+            $track->setArtiste($row['artiste_album'] ?? '');
+            $track->setAnnee((int) ($row['annee_album'] ?? 0));
+        } else {
+            $track = new PodcastTrack($row['titre'], $row['filename'] ?? '');
+            $track->setAuteur($row['auteur_podcast'] ?? '');
+            $track->setDate($row['date_posdcast'] ?? '');
+        }
+
+        if ($row['genre'] !== null) {
+            $track->setGenre($row['genre']);
+        }
+        if ($row['duree'] !== null) {
+            $track->setDuree((int) $row['duree']);
+        }
+
+        $track->id = (int) $row['id'];
+
+        return $track;
+    }
+
     public function findAllPlaylists(): array
     {
         $stmt = $this->pdo->query('SELECT id, nom FROM playlist');

@@ -8,8 +8,6 @@ class DisplayPlaylistAction extends Action
 {
     public function execute(): string
     {
-        session_start();
-
         if (!isset($_SESSION['playlist'])) {
             return '<p>Aucune playlist pour le moment.
                 <a href="?action=add-playlist">Créer une playlist</a>
@@ -20,6 +18,12 @@ class DisplayPlaylistAction extends Action
 
         $renderer = new AudioListRenderer($playlist);
 
-        return $renderer->render(1);
+        $html = $renderer->render(1);
+
+        if ($playlist->id !== null) {
+            $html .= '<p><a href="?action=add-track">Ajouter une piste</a></p>';
+        }
+
+        return $html;
     }
 }

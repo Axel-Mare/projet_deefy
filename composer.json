@@ -1,5 +1,5 @@
 {
-    "name": "elve/td7",
+    "name": "iutnc/deefy",
     "autoload": {
         "psr-4": {
             "iutnc\\deefy\\": "src/classes/"

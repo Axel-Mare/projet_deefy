@@ -5,7 +5,7 @@ use iutnc\deefy\audio\tracks\AudioTrack;
 
 class AudioList {
     
-    private String $nom;
+    private string $nom;
     protected int $nb_piste;
     protected int $duree;
     protected array $tracks;

@@ -9,12 +9,12 @@ class AudioListRenderer implements Renderer {
     ) {}
 
     public function render(int $selector): string {
-        $rep = "<h2>" . $this->list->nom . "</h2>\n";
-        
+        $rep = "<h2>" . htmlspecialchars($this->list->nom, ENT_QUOTES, 'UTF-8') . "</h2>\n";
+
         foreach ($this->list->tracks as $track)
-            $rep .= '<strong>' . $track->titre . '</strong><br>
+            $rep .= '<strong>' . htmlspecialchars($track->titre, ENT_QUOTES, 'UTF-8') . '</strong><br>
                 <audio controls>
-                    <source src="' . $track->fichier . '" type="audio/mpeg">
+                    <source src="' . htmlspecialchars($track->fichier, ENT_QUOTES, 'UTF-8') . '" type="audio/mpeg">
                 </audio>';
         $rep .= "<p>Nombre de pistes : " . $this->list->nb_piste . "</p>\n";
         $rep .= "<p>Durée totale : " . $this->list->duree . "</p>\n";

@@ -1,11 +1,10 @@
 <?php
 namespace iutnc\deefy\audio\lists;
 use iutnc\deefy\audio\tracks\AudioTrack;
-use iutnc\deefy\exception\InvalidPropertyNameException;
 
 class Playlist extends AudioList {
     
-    private int $id;
+    public ?int $id = null;
 
     public function addTrack(AudioTrack $track): void
     {
@@ -34,15 +33,6 @@ class Playlist extends AudioList {
                 $this->addTrack($track);
             }
         }
-    }
-
-    public function __get(string $at): mixed
-    {
-        if (property_exists($this, $at)) {
-            return $this->$at;
-        }
-
-        throw new InvalidPropertyNameException("invalid property : $at");
     }
 }
     
